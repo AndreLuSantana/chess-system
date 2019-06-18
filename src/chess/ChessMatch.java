@@ -1,7 +1,6 @@
 package chess;
 
 import boardgame.Board;
-import boardgame.Position;
 import chess.pieces.King;
 import chess.pieces.Rook;
 
@@ -11,7 +10,7 @@ public class ChessMatch { //classe de definição da partida de xadrez
 	
 	public ChessMatch() {
 		board = new Board(8,8);
-		InitialSetup();
+		initialSetup();
 	}
 	
 	public ChessPiece[][] getPieces(){
@@ -25,9 +24,14 @@ public class ChessMatch { //classe de definição da partida de xadrez
 		}
 		return mat;
 	}
-	private void InitialSetup() { //inserindo pecas setup inicial
-		board.PlacePiece(new Rook(board, Color.WHITE), new Position(2,1));
-		board.PlacePiece(new King(board, Color.BLACK), new Position(0,4));
-		board.PlacePiece(new King(board, Color.BLACK), new Position(7,4));
+	
+	private void placeNewPiece(char column, int row, ChessPiece piece) {
+		board.placePiece(piece, new ChessPosition(column, row).toPosition());
+	}
+	
+	private void initialSetup() { //inserindo pecas setup inicial
+		placeNewPiece('b', 6, new Rook(board, Color.WHITE));
+		placeNewPiece('e', 8, new King(board, Color.BLACK));
+		placeNewPiece('e', 1, new King(board, Color.BLACK));
 	}
 }
