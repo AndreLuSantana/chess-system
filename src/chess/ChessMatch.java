@@ -33,6 +33,7 @@ public class ChessMatch { // classe de definição da partida de xadrez
 		Position target = targetPosition.toPosition();
 		
 		validateSourcePosition(source);
+		validateTargetPosition(source, target);
 		
 		Piece capturePiece = makeMove(source, target);
 		
@@ -54,6 +55,12 @@ public class ChessMatch { // classe de definição da partida de xadrez
 			throw new ChessException("There is no possible moves for the chosen piece.");
 		}
 		
+	}
+	
+	private void validateTargetPosition(Position source, Position target) {
+		if(!board.piece(source).possibleMove(target)) {
+			throw new ChessException("The chosen piece can not move to target position.");
+		}
 	}
 
 	private void placeNewPiece(char column, int row, ChessPiece piece) {
