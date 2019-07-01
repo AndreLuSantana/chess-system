@@ -9,10 +9,22 @@ import chess.pieces.Rook;
 public class ChessMatch { // classe de definição da partida de xadrez
 
 	private Board board;
+	private int turn;
+	private Color currentPlayer;
 
 	public ChessMatch() {
 		board = new Board(8, 8);
+		turn = 1;
+		currentPlayer = Color.WHITE;
 		initialSetup();
+	}
+	
+	public int getTurn() {
+		return this.turn;
+	}
+	
+	public Color getCurrentPlayer() {
+		return this.currentPlayer;
 	}
 
 	public ChessPiece[][] getPieces() {
@@ -42,7 +54,7 @@ public class ChessMatch { // classe de definição da partida de xadrez
 		validateTargetPosition(source, target);
 		
 		Piece capturePiece = makeMove(source, target);
-		
+		nextTurn();
 		return (ChessPiece) capturePiece;
 	}
 	
@@ -57,6 +69,9 @@ public class ChessMatch { // classe de definição da partida de xadrez
 		if(!board.thereIsAPiece(position)) {
 			throw new ChessException("There is no piece on source position.");
 		}
+		if(currentPlayer != ((ChessPiece)board.piece(position)).getColor()){
+			throw new ChessException("The chosen piece is not yours.");
+		}
 		if(!board.piece(position).isThereAnyPossibleMove()) {
 			throw new ChessException("There is no possible moves for the chosen piece.");
 		}
@@ -67,6 +82,11 @@ public class ChessMatch { // classe de definição da partida de xadrez
 		if(!board.piece(source).possibleMove(target)) {
 			throw new ChessException("The chosen piece can not move to target position.");
 		}
+	}
+	
+	private void nextTurn() {
+		turn++;
+		currentPlayer = (currentPlayer == Color.WHITE)?Color.BLACK: Color.WHITE;
 	}
 
 	private void placeNewPiece(char column, int row, ChessPiece piece) {

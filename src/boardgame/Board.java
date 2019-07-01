@@ -58,7 +58,7 @@ public class Board {//
 		return aux;
 	}
 	
-	private boolean positionExists(int row, int column) {//método auxiliar para verificar a existencia da posição no tabiuleiro
+	private boolean positionExists(int row, int column) {//método auxiliar para verificar a existencia da posição no tabuleiro
 		return row >= 0 && row < rows && column >=0 && column < columns;
 	}
 	
